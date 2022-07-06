@@ -105,6 +105,12 @@ RUN set -eux; \
 	composer symfony:dump-env prod; \
 	composer run-script --no-dev post-install-cmd; \
 	chmod +x bin/console; sync
+
+RUN set -ex \
+  && apk --no-cache add \
+    postgresql-dev;
+
+RUN docker-php-ext-install pdo pdo_pgsql;
 VOLUME /srv/app/var
 
 ENTRYPOINT ["docker-entrypoint"]
